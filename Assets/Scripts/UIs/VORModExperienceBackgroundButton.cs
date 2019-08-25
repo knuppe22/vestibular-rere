@@ -10,6 +10,6 @@ public class VORModExperienceBackgroundButton : VRInteractable
     public override void OnClick()
     {
         base.OnClick();
-        GameManager.instance.experienceInstance.GetComponent<VORModExperience>().SceneOnOff(on);
+        GameManager.instance.experienceInstance.GetComponent<VORModExperience>().background = on;
     }
 }

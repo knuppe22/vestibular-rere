@@ -10,6 +10,6 @@ public class VORModExperienceFeedbackButton : VRInteractable
     public override void OnClick()
     {
         base.OnClick();
-        GameManager.SetVRFeedback(feedback);
+        GameManager.instance.experienceInstance.GetComponent<VORModExperience>().feedback = feedback;
     }
 }
