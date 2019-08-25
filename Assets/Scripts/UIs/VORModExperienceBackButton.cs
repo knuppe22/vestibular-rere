@@ -7,7 +7,6 @@ public class VORModExperienceBackButton : VRInteractable
     public override void OnClick()
     {
         base.OnClick();
-
-        GameManager.instance.EndVORModExperience();
+        GameManager.instance.experienceInstance.GetComponent<VORModExperience>().exit = true;
     }
 }
