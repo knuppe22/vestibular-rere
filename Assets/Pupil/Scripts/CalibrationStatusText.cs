@@ -38,7 +38,7 @@ namespace PupilLabs
         private void OnConnected()
         {
             string text = "Connected";
-            text += "\n\nPlease warm up your eyes and press 'C' to start the calibration.";
+            text += "\n\nPlease warm up your eyes and grab controller to start the calibration.";
             SetStatusText(text);
         }
 

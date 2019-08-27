@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -60,6 +61,8 @@ public abstract class Stage : MonoBehaviour {
     protected float waitTimer = 0;
     protected float moveTime;
     protected float moveTimer = 0;
+    protected float startedTime;
+    protected int intForCsv = 0;
 
     protected bool coroutineCalled = false;
     protected float angleError = 0.2f; 
@@ -71,7 +74,13 @@ public abstract class Stage : MonoBehaviour {
     public float[] eyeAngle;
     public float[] eyeVelocity;
     public bool[] selected;
-    
+
+    [SerializeField]
+    protected string resultFileName;
+    [SerializeField]
+    protected string resultFilePath = @"C:\test_results";
+    protected StreamWriter streamWriter;
+
     protected GameObject guideCanvas;
     protected GameObject resultCanvas;
     protected Text guide;
@@ -87,6 +96,13 @@ public abstract class Stage : MonoBehaviour {
         resultCanvas = transform.Find("Result Canvas").gameObject;
         guide = transform.Find("Guide Canvas/Image/Guide Text").GetComponent<Text>();
         resultCanvas.SetActive(false);
+
+        if (GameManager.instance.isGazing)
+        {
+            string fullFilePath = string.Format(@"{0}\{1}_{2}.csv", resultFilePath, System.DateTime.Now.ToString("yyMMddHHmmss"), resultFileName);
+            streamWriter = new StreamWriter(fullFilePath, false, System.Text.Encoding.UTF8);
+            streamWriter.WriteLine("Cycle 수, 시간(ms), 머리회전x(˚), 머리회전y(˚), 안구회전x(˚), 안구회전y(˚)");
+        }
     }
     public abstract void Init(Direction dir, int level);
 
@@ -96,6 +112,27 @@ public abstract class Stage : MonoBehaviour {
             Destroy(instance.gameObject);
 
         instance = this;
+    }
+
+    protected void WriteLog()
+    {
+        if (intForCsv > 3)
+        {
+            intForCsv = 0;
+
+            List<object> thingsToWrite = new List<object>
+                        {
+                            currentCycle + 1,
+                            Time.time - startedTime,
+                            (GameManager.instance.camera.localEulerAngles.y + 180) % 360 - 180,
+                            (540 - GameManager.instance.camera.localEulerAngles.x) % 360 - 180,
+                            Vector3.Angle(Vector3.left, GameManager.instance.localGazeVector) - 90,
+                            Vector3.Angle(Vector3.down, GameManager.instance.localGazeVector) - 90
+                        };
+
+            streamWriter.WriteLine(string.Join(", ", thingsToWrite));
+        }
+        intForCsv++;
     }
 
     public void TargetGazeEnter()
@@ -136,5 +173,10 @@ public abstract class Stage : MonoBehaviour {
         {
             GameManager.SelectLevel(directionEnum, level + 1);
         }
+    }
+
+    void OnDestroy()
+    {
+        if (streamWriter != null) streamWriter.Close();
     }
 }

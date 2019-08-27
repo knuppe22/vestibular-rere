@@ -81,6 +81,7 @@ public class SaccadeStage : Stage {
                 if (waitTimer > waitTime) // Transition
                 {
                     state = State.Move;
+                    startedTime = Time.time;
 
                     //Transform target = left ? rightTarget : leftTarget;
 
@@ -100,6 +101,11 @@ public class SaccadeStage : Stage {
                 break;
             case State.Move:
                 moveTimer += Time.deltaTime;
+
+                if (GameManager.instance.isGazing)
+                {
+                    WriteLog();
+                }
 
                 if (GameManager.instance.isGazing && !coroutineCalled && moveTimer > moveTime * 0.75)
                 {

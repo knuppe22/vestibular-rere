@@ -1441,6 +1441,8 @@ MonoBehaviour:
   eyeAngle: []
   eyeVelocity: []
   selected: 
+  resultFileName: saccade
+  resultFilePath: C:\test_results
 --- !u!1 &1912557380402976
 GameObject:
   m_ObjectHideFlags: 0

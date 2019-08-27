@@ -84,6 +84,7 @@ public class SmoothPursuitStage : Stage {
                 if(waitTimer > waitTime) // Transition
                 {
                     state = State.Move;
+                    startedTime = Time.time;
 
                     if (GameManager.instance.isGazing)
                     {
@@ -99,6 +100,11 @@ public class SmoothPursuitStage : Stage {
                 Vector3 to = (right ? endTargetVector : startTargetVector);
                 transform.Find("Moving").position = from + (to - from) * (moveTimer / moveTime);
                 //MovingGuideText();
+
+                if (GameManager.instance.isGazing)
+                {
+                    WriteLog();
+                }
 
                 //Debug.DrawRay(cameraPosition, initialVector, Color.magenta);
                 //Debug.DrawRay(cameraPosition, initialVector + goalVector, Color.cyan);

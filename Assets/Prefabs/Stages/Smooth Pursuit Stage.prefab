@@ -1406,6 +1406,8 @@ MonoBehaviour:
   eyeAngle: []
   eyeVelocity: []
   selected: 
+  resultFileName: smooth
+  resultFilePath: C:\test_results
 --- !u!1 &1891665205114260
 GameObject:
   m_ObjectHideFlags: 0

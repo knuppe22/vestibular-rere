@@ -1506,6 +1506,8 @@ MonoBehaviour:
   eyeAngle: []
   eyeVelocity: []
   selected: 
+  resultFileName: vor
+  resultFilePath: C:\test_results
   HUDMarkers: {fileID: 1234436807217516, guid: 58d2e37a6b468bc45951d508e24565b8, type: 3}
 --- !u!1 &1926681561658504
 GameObject:

@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour {
 
     public new Transform camera;
     public GameObject HUDCanvas;
-    
+
+    public Vector3 localGazeVector;
     public Vector3 gazeVector;
 
     public GameObject[] stages;
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour {
     public GameObject experienceInstance;
     
     public bool isGazing = false;
-    public float confidenceThreshold = 0.75f;
+    public float confidenceThreshold = 0.0f;
 
     public SubscriptionsController subscriptionsController;
     public CalibrationController calibrationController;
@@ -104,7 +105,7 @@ public class GameManager : MonoBehaviour {
     {
         if (gazeData.Confidence >= confidenceThreshold)
         {
-            Vector3 localGazeVector = gazeData.GazeDirection;
+            localGazeVector = gazeData.GazeDirection;
             gazeVector = camera.TransformDirection(localGazeVector);
         }
     }

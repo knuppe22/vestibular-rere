@@ -111,6 +111,7 @@ public class VORModStage : Stage {
                 if (waitTimer > waitTime) // Transition
                 {
                     state = State.Move;
+                    startedTime = Time.time;
 
                     headVector = GameManager.instance.camera.forward;
                     if (GameManager.instance.isGazing)
@@ -127,6 +128,10 @@ public class VORModStage : Stage {
             case State.Move:
                 moveTimer += Time.deltaTime;
 
+                if (GameManager.instance.isGazing)
+                {
+                    WriteLog();
+                }
                 /*
                 cameraForward = baseVector + (left ? -1 : 1) * (-goalCameraVector + 2 * goalCameraVector * (moveTimer / interval));
                 Debug.DrawRay(GameManager.instance.camera.position, cameraForward);
